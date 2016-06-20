@@ -1,0 +1,679 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "AppServer"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /candidates:
+    get:
+      description: "Servicio para obtener los candidatos de match para un `User`.\n"
+      operationId: "candidatesGET"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "query"
+        description: "Id User"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/Users"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error getting candidates"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User Not Found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /chat:
+    get:
+      description: "Servicio para obtener todos los mensajes de una conversación entre\
+        \ dos usuarios.\n"
+      operationId: "chatGET"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      - name: "idUser1"
+        in: "query"
+        description: "Id User 1"
+        required: true
+        type: "string"
+      - name: "idUser2"
+        in: "query"
+        description: "Id User 2"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/Chat"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error getting all messages"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User Not Found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /chat/last:
+    put:
+      description: "Servicio para actualizar el último mensaje visto por un usuario\
+        \ en una conversación.\n"
+      operationId: "chatLastPUT"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "message"
+        description: "Id User emisor del mensaje"
+        required: false
+        schema:
+          $ref: "#/definitions/message"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error updating last message seen"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User Not Found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /chat/message:
+    post:
+      description: "Servicio para postear un mensaje en una conversación.\n"
+      operationId: "chatMessagePOST"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "message"
+        description: "Id User emisor del mensaje"
+        required: false
+        schema:
+          $ref: "#/definitions/message_1"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error posting message"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User Not Found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /chat/new:
+    get:
+      description: "Servicio para obtener mensajes no vistos por un usuario en la\
+        \ conversación con otro.\n"
+      operationId: "chatNewGET"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      - name: "idUser1"
+        in: "query"
+        description: "Id User 1"
+        required: true
+        type: "string"
+      - name: "idUser2"
+        in: "query"
+        description: "Id User 2"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/Chat"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error getting new messages"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User Not Found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /chats:
+    get:
+      description: "Servicio para obtener los chats de un `User`.\n"
+      operationId: "chatsGET"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "query"
+        description: "Id User"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/Users"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error getting chats"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User Not Found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /interests:
+    get:
+      description: "Obtiene la foto de un `User`.\n"
+      operationId: "interestsGET"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/inline_response_200"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error getting interests"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /login_user:
+    put:
+      description: "Servicio de Login.\n"
+      operationId: "login_userPUT"
+      parameters:
+      - in: "body"
+        name: "credentials"
+        description: "Credenciales del usuario"
+        required: true
+        schema:
+          $ref: "#/definitions/credentials"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Invalid Credentials"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User Not Found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /match:
+    get:
+      description: "Servicio para obtener los nuevos matches de un `User`.\n"
+      operationId: "matchGET"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "query"
+        description: "Id User"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/Users"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error getting matches"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User Not Found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /match/confirm:
+    post:
+      description: "Servicio para confirmar un match.\n"
+      operationId: "matchConfirmPOST"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      - name: "idFrom"
+        in: "query"
+        description: "Id del User que confirma el match"
+        required: true
+        type: "string"
+      - name: "idTo"
+        in: "query"
+        description: "Id del User que recibe la confirmación del match"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error in match confirm service"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User Not Found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /match/no:
+    post:
+      description: "Servicio para rechazar a un `User`.\n"
+      operationId: "matchNoPOST"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      - name: "idFrom"
+        in: "query"
+        description: "Id del User que emite el rechazo"
+        required: true
+        type: "string"
+      - name: "idTo"
+        in: "query"
+        description: "Id del User recibe el rechazo"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error in match no service"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User Not Found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /match/yes:
+    post:
+      description: "Servicio para dar Like a un `User`.\n"
+      operationId: "matchYesPOST"
+      parameters:
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      - name: "idFrom"
+        in: "query"
+        description: "Id del User que da el Like"
+        required: true
+        type: "string"
+      - name: "idTo"
+        in: "query"
+        description: "Id del User recibe el Like"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error in match yes service"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User Not Found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /user/newuser:
+    post:
+      description: "Crea un nuevo `User`.\n"
+      operationId: "userNewuserPOST"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "Usuario a registrar"
+        required: true
+        schema:
+          $ref: "#/definitions/user"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error creating user"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /user/photo:
+    get:
+      description: "Obtiene la foto de un `User`.\n"
+      operationId: "userPhotoGET"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "Id User"
+        required: true
+        type: "string"
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/inline_response_200_1"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error getting photo"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User not found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+  /user/updateuser:
+    put:
+      description: "Actualiza la información de un `User`.\n"
+      operationId: "userUpdateuserPUT"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "Usuario a registrar"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      - name: "token"
+        in: "header"
+        description: "Token de sesión"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+          headers:
+            token:
+              type: "string"
+              description: "Token de sesión"
+        400:
+          description: "Error updating user"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        403:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+        404:
+          description: "User not found"
+          schema:
+            $ref: "#/definitions/GenericResponse"
+      x-swagger-router-controller: "Default"
+definitions:
+  GenericResponse:
+    type: "object"
+    properties:
+      success:
+        type: "string"
+      data:
+        type: "string"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      sex:
+        type: "string"
+      age:
+        type: "string"
+      password:
+        type: "string"
+      photo:
+        type: "string"
+      email:
+        type: "string"
+      interests:
+        type: "array"
+        items:
+          $ref: "#/definitions/inline_response_200_interests"
+      location:
+        $ref: "#/definitions/User_location"
+    title: "user"
+  Users:
+    title: "users"
+    type: "array"
+    items:
+      $ref: "#/definitions/User"
+  Chat:
+    title: "chat"
+    type: "array"
+    items:
+      $ref: "#/definitions/Chat_inner"
+  message:
+    type: "object"
+    properties:
+      idFrom:
+        type: "string"
+      idTo:
+        type: "string"
+      idMessage:
+        type: "string"
+    title: "message"
+  message_1:
+    type: "object"
+    properties:
+      idFrom:
+        type: "string"
+      idTo:
+        type: "string"
+      message:
+        type: "string"
+    title: "message"
+  inline_response_200_interests:
+    properties:
+      category:
+        type: "string"
+      value:
+        type: "string"
+  inline_response_200:
+    properties:
+      interests:
+        type: "array"
+        items:
+          $ref: "#/definitions/inline_response_200_interests"
+  credentials:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+    title: "Credentials"
+  user:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+    title: "user"
+  inline_response_200_1:
+    properties:
+      photo:
+        type: "string"
+  User_location:
+    properties:
+      latitude:
+        type: "string"
+      longitude:
+        type: "string"
+  Chat_inner:
+    properties:
+      id:
+        type: "string"
+      user:
+        type: "string"
+      content:
+        type: "string"
